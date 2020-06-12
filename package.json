@@ -1,0 +1,63 @@
+{
+	"name": "learnql",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"lint": "pretty-quick --staged && lint-staged",
+		"test": "echo \"Simulating tests...\" && sleep 5 && echo \"All tests passed \"",
+		"start": "node dist/index.js",
+		"dev:mac": "cross-env NODE_ENV=development DEBUG=profiler nodemon --exec ts-node src/index.ts",
+		"dev:wins": "cross-env NODE_ENV=development & set DEBUG=profiler & nodemon --exec ts-node src/index.ts",
+		"prebuild": "eslint .",
+		"build": "tsc -p ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/ioredis": "^4.16.5",
+		"@typescript-eslint/eslint-plugin": "^3.2.0",
+		"@typescript-eslint/parser": "^3.2.0",
+		"cross-env": "^7.0.2",
+		"eslint": "^7.2.0",
+		"eslint-config-airbnb-base": "^14.2.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-import": "^2.21.2",
+		"eslint-plugin-prettier": "^3.1.3",
+		"husky": "^4.2.5",
+		"lint-staged": "^10.2.10",
+		"nodemon": "^2.0.4",
+		"prettier": "^2.0.5",
+		"pretty-quick": "^2.0.1",
+		"ts-node": "^8.10.2",
+		"typescript": "^3.9.5"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint"
+		}
+	},
+	"lint-staged": {
+		"*.{ts,js}": "eslint --cache --fix"
+	},
+	"dependencies": {
+		"@types/debug": "^4.1.5",
+		"@types/express-rate-limit": "^5.0.0",
+		"@types/helmet": "0.0.47",
+		"apollo-server-express": "^2.14.3",
+		"body-parser": "^1.19.0",
+		"colors": "^1.4.0",
+		"connect-redis": "^4.0.4",
+		"cors": "^2.8.5",
+		"debug": "^4.1.1",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"express-rate-limit": "^5.1.3",
+		"helmet": "^3.22.1",
+		"http-status-codes": "^1.4.0",
+		"ioredis": "^4.17.3",
+		"rate-limit-redis": "^2.0.0",
+		"reflect-metadata": "^0.1.13"
+	}
+}
