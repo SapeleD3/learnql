@@ -20,7 +20,8 @@ module.exports = {
 	plugins: ["@typescript-eslint"],
 	rules: {
 		"import/prefer-default-export": "off",
-		"prettier/prettier": "error",
+		"prettier/prettier": "off",
+		"no-unused-vars": "off",
 		"no-console": "off",
 		"import/extensions": [
 			"error",

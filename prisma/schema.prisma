@@ -7,12 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model test {
-  id      String @id
-  message String
-}
-
-model test2 {
-  id      String @id
-  message String
+model user {
+  bio       String?
+  create_on DateTime
+  email     String   @unique
+  id        String   @id
+  image     String?
+  password  String
+  social    String[]
+  username  String
+  website   String?
 }
