@@ -1,27 +1,51 @@
-import { typeDefs } from "./typeDefs";
-import { resolvers } from "./resolvers";
-import { Request, Response } from "express";
-import { ApolloServerExpressConfig } from "apollo-server-express";
-import errorHandler from "./middleware/errorHandler";
-import { DEV_ENVIRONMENT } from "./constants";
-const { NODE_ENV, BRANCH } = process.env;
+import {Request} from 'express';
+import {ApolloServerExpressConfig, ApolloError} from 'apollo-server-express';
+import {typeDefs} from './typeDefs';
+import resolvers from './resolvers';
+import errorHandler from './middleware/errorHandler';
+import {DEV_ENVIRONMENT, message} from './constants';
+import {tradeTokenForUser} from './utils/auth-helper';
+import {IUser} from './types/Schema';
+
+const {NODE_ENV} = process.env;
+const {unauthorized} = message;
 
 interface ISettings {
-	"request.credentials": "omit" | "include" | "same-origin";
-	"schema.polling.enable": boolean;
+	'request.credentials': 'omit' | 'include' | 'same-origin';
+	'schema.polling.enable': boolean;
 }
 const settings: ISettings = {
-	"request.credentials": "include",
-	"schema.polling.enable": false,
+	'request.credentials': 'include',
+	'schema.polling.enable': false,
 };
+
+export interface context {
+	req: Request;
+	user: IUser;
+}
 
 const development: ApolloServerExpressConfig = {
 	typeDefs,
 	resolvers,
-	context: async ({ req, res }: { req: Request; res: Response }) => {
-		let userId;
+	context: async ({req}: {req: Request}) => {
+		const {
+			headers: {authorization},
+		} = req;
+		let token;
+		if (authorization && authorization.startsWith('Bearer ')) {
+			token = authorization.split('Bearer ')[1];
+		} else {
+			token = '';
+		}
+		let user;
+		if (token) {
+			user = await tradeTokenForUser(token, req);
+		} else {
+			user = {};
+		}
 		return {
-			userId,
+			req,
+			user,
 		};
 	},
 	playground: {
@@ -36,10 +60,20 @@ const development: ApolloServerExpressConfig = {
 const production: ApolloServerExpressConfig = {
 	typeDefs,
 	resolvers,
-	context: async ({ req, res }: { req: Request; res: Response }) => {
-		let userId;
+	context: async ({req}: {req: Request}) => {
+		const {
+			headers: {authorization},
+		} = req;
+		let token;
+		if (authorization && authorization.startsWith('Bearer ')) {
+			token = authorization.split('Bearer ')[1];
+		} else {
+			return new ApolloError(unauthorized);
+		}
+		const user = await tradeTokenForUser(token, req);
 		return {
-			userId,
+			req,
+			user,
 		};
 	},
 	playground: false,
@@ -49,7 +83,7 @@ const production: ApolloServerExpressConfig = {
 };
 
 export const Schema = () => {
-	if (BRANCH === "master") {
+	if (NODE_ENV !== 'development') {
 		return production;
 	}
 	return development;

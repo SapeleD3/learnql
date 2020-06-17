@@ -8,4 +8,5 @@ export interface IUser {
 	social: string[];
 	username: string;
 	website: string;
+	confirmPassword: string;
 }

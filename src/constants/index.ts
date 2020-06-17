@@ -2,12 +2,36 @@
  * Application's namespace
  * @constant
  */
-export const NAMESPACE = "profiler";
-export const MY_NAMESPACE =
-	"d15963d48aa2432d59736b691adddca8f17f9fe04251c843b6759920d5c9e88ceba7d32b495d7afcc8fbbedd1f986d37625132858a6ad49f5232e134628af3dce677653850a4d4bb3eda7e3526339329293934573bb14bc686a3109235171a04924755ed5eec4b07e0a808d8a27d7cb9134646720e42b0ccf0e919c194cb56aa5923fd48852f28f3338b9e96907907f78ea970a60ef8c8760b2f576656491e31e859e3c1ac45782598b1c8b697a1f28fcba0d0508382d1d72833fc7f9adfa4e7b8e01f1dfc277f7f2c0eabb093d5389756a5ee38e035a553f68db61663a3bc3e323e887281b118700425392d3df609b0f012686e0bee65a729a89263aa85573d";
+export const NAMESPACE = 'profiler';
+export const MY_NAMESPACE = '1b671a64-40d5-491e-99b0-da01ff1f3341';
 
 /**
  * Development environment
  * @constant
  */
-export const DEV_ENVIRONMENT = "development";
+export const DEV_ENVIRONMENT = 'development';
+
+/**
+ * Production url
+ * @constant
+ */
+export const PROD_URL = '';
+
+/**
+ * Local development url
+ * @constant
+ */
+export const LOCAL_URL = 'http://localhost:3000';
+
+/**
+ * message constants
+ * @constant
+ */
+export const message = {
+	mustNotBeEmpty: 'Must not be empty',
+	passwordMustMatch: 'passwords must match',
+	mustBeValidEmail: 'must be a valid email',
+	unauthorized: 'unauthorized',
+	somethingwentwrong: 'something went wrong',
+	invalidCred: 'invalid Credentials',
+};

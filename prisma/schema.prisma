@@ -14,7 +14,8 @@ model user {
   id        String   @id
   image     String?
   password  String
-  social    String[]
+  social    Json?
+  user_link String   @unique
   username  String
   website   String?
 }
